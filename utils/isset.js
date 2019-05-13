@@ -4,14 +4,14 @@ module.exports = {
  *
  * @param {Function} accessor Function that returns our value
  */
-isset: function (accessor) {
-    try {
-      //if the returned value of our function is not undefined
-      return typeof accessor() !== 'undefined'
-    } catch (e) {
-      // catch the Error it would normally throw for
-      // referencing a property of undefined
-      return false
+    isset: function (accessor) {
+        try {
+            //if the returned value of our function is not undefined
+            return typeof accessor() !== 'undefined';
+        } catch (e) {
+            // catch the Error it would normally throw for
+            // referencing a property of undefined
+            return false;
+        }
     }
-  }
-}
+};
