@@ -61,7 +61,7 @@ module.exports = {
           console.log(profInfo.length);
           for (let i = 0; i <= profInfo.length; i++) {
             if (isset(() => profInfo[i]) && bcrypt.compareSync(req.body.password, profInfo[i]["password"])) {
-              const token = jwt.sign({ id: profInfo[i].id }, req.app.get('secretKey'), { expiresIn: '1h' });
+              const token = jwt.sign({ id: profInfo[i].id }, req.app.get('SECRET_KEY'), { expiresIn: '1h' });
               res.json({ status: "success", message: "teacher found", data: { teacher: profInfo[i], token: token } });
             } else {
               res.json({ status: "error", message: "Invalid email/password", data: null });

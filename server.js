@@ -1,14 +1,18 @@
-const express = require('express');
-const logger = require('morgan');
-const bodyParser = require('body-parser');
+const express = require('express'); //our server
+const logger = require('morgan'); //logging
+const bodyParser = require('body-parser'); //for parsing http request body
 const app = express();
 
+//jwt for authentication
 const jwt = require('jsonwebtoken');
 
+// our api endpoints for teachers and students
 const teachers = require('./server/routes/teachers');
 const pupils = require('./server/routes/pupils');
 
-app.set('secretKey', process.env.SECRET_KEY); // jwt secret key used for signing/verification
+require('dotenv').config(); // to access SECRET_KEY in .env file
+
+app.set('SECRET_KEY', process.env.SECRET_KEY); // jwt secret key used for signing/verification
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +28,7 @@ app.use('/api/teachers', teachers);
 app.use('/api/pupils', validateTeacher, pupils);
 
 function validateTeacher(req, res, callback) {
-    jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function (err, decoded) {
+    jwt.verify(req.headers['x-access-token'], req.app.get('SECRET_KEY'), function (err, decoded) {
         if (err) {
             console.log(req.headers['x-access-token']);
             res.json({ status: "error", message: err.message, data: null });
