@@ -5,8 +5,8 @@ const app = express();
 
 const jwt = require('jsonwebtoken');
 
-const teachers = require('./routes/teachers');
-const pupils = require('./routes/pupils');
+const teachers = require('./server/routes/teachers');
+const pupils = require('./server/routes/pupils');
 
 app.set('secretKey', process.env.SECRET_KEY); // jwt secret key used for signing/verification
 
