@@ -9,7 +9,7 @@ module.exports = {
    * @param {string} val the value we want to check for
    * @param {Function} callback function to call afterwards
    */
-  find: function(type, prop, val, callback) {
+  find: function (type, prop, val, callback) {
     try {
       //get the data from the file
       var dataFile = fs.readFileSync('data.json');
@@ -38,12 +38,12 @@ module.exports = {
   },
 
   /**
-   * find all items with type teachers or students
+   * find all items with type "teachers" or "pupils"
    *
    * @param {string} type whether looking for "teachers" or "pupils"
    * @param {Function} callback function to call afterwards
    */
-  findAll: function(type, callback) {
+  findAll: function (type, callback) {
     try {
       //get the data from the file
       var dataFile = fs.readFileSync('data.json');
