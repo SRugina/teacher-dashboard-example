@@ -14,5 +14,9 @@
     "morgan": "^1.9.1",
     "dotenv": "^8.0.0"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.2"
+  }
 }
