@@ -1,0 +1,31 @@
+{
+    "teachers": [
+        {
+            "name": "",
+            "email": "email1",
+            "password": "$2b$10$pKql8Yi3EudHcoulB3p75OLQ.eh8w08gnVn6wIZoYm0H2Xo.BWiuy",
+            "formGroup": "3e",
+            "id": 0
+        }
+    ],
+    "pupils": [
+        {
+            "surname": "jones",
+            "forename": "craig",
+            "dob": "13052004",
+            "homeAddress": "05",
+            "id": 0
+        },
+        {
+            "surname": "jones",
+            "forename": "craig",
+            "dob": "13052004",
+            "homeAddress": "'05 Kenilworth Avenue'",
+            "homePhone": "074958374563",
+            "gender": "male",
+            "tutorGroup": "3e",
+            "schoolEmail": "tester@school.com",
+            "id": 1
+        }
+    ]
+}
