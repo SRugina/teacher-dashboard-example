@@ -1,6 +1,10 @@
 # teacher-dashboard-example
 practice Computer Science GCSE programming task: a teacher dashboard
 
+Note: frequent mention of glitch.com in comments is because the code is running there at teacher-dash.glitch.me, but this program can still be compiled from source
+
+Note2: using a data.json file to store dummy data for illustrative purposes, in a production environment you would use mySQL, mongoDB, or etc.
+
 ## Scenario:
 
 When new students arrive at Tree Road School, they are assigned:

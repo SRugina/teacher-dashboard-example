@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const teachers = require('./routes/teachers');
 const pupils = require('./routes/pupils');
 
-app.set('secretKey', process.env.SECRET_KEY); // jwt secret token
+app.set('secretKey', process.env.SECRET_KEY); // jwt secret key used for signing/verification
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -24,7 +24,7 @@ app.use('/api/teachers', teachers);
 app.use('/api/pupils', validateTeacher, pupils);
 
 function validateTeacher(req, res, callback) {
-    jwt.verify(req.headers['x-access-token'], req.app.get('secret'), function (err, decoded) {
+    jwt.verify(req.headers['x-access-token'], req.app.get('secretKey'), function (err, decoded) {
         if (err) {
             console.log(req.headers['x-access-token']);
             res.json({ status: "error", message: err.message, data: null });
