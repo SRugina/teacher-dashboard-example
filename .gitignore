@@ -13,8 +13,3 @@ node_modules/
 
 # dotenv environment variables file
 .env
-
-# gpg signing keys for gitpod
-public.key
-private.key
-signSetup.sh
