@@ -18,7 +18,7 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ status: "success", message: "Pupil Found", data: { pupils: pupilInfo } });
+                res.json({ success: true, message: "Pupil Found", data: { pupils: pupilInfo } });
             }
         });
     },
@@ -35,7 +35,7 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ status: "success", message: "pupils list found", data: { pupils: pupils } });
+                res.json({ success: true, message: "pupils list found", data: { pupils: pupils } });
             }
         });
     },
@@ -53,7 +53,7 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ status: "success", message: "Pupil updated successfully", data: null });
+                res.json({ success: true, message: "Pupil updated successfully", data: null });
             }
         });
     },
@@ -71,7 +71,7 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ status: "success", message: "Pupil deleted successfully", data: null });
+                res.json({ success: true, message: "Pupil deleted successfully", data: null });
             }
         });
     },
@@ -89,9 +89,9 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ status: "success", message: "Pupil created successfully", data: null });
+                res.json({ success: true, message: "Pupil created successfully", data: null });
             }
         });
-    },
+    }
 
 };

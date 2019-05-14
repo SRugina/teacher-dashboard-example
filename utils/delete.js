@@ -17,13 +17,13 @@ module.exports = {
             var data = JSON.parse(dataFile);
 
             if (type.toLowerCase() == "teachers") {
-                for (let i = 0; i < data["teachers"].length(); i++) { // for each teacher
+                for (let i = 0; i < data["teachers"].length; i++) { // for each teacher
                     if (data["teachers"][i][withProp] == checkVal) { // with property that equals our check value
                         data["teachers"].splice(i, 1); // remove that teacher
                     }
                 }
             } else if (type.toLowerCase() == "pupils") {
-                for (let i = 0; i < data["pupils"].length(); i++) { // for each pupil
+                for (let i = 0; i < data["pupils"].length; i++) { // for each pupil
                     if (data["pupils"][i][withProp] == checkVal) { // with property that matches our check value
                         data["pupils"].splice(i, 1); // remove that teacher
                     }

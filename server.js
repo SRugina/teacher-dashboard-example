@@ -6,32 +6,38 @@ const app = express();
 //jwt for authentication
 const jwt = require('jsonwebtoken');
 
-// our api endpoints for teachers and students
-const teachers = require('./server/routes/teachers');
-const pupils = require('./server/routes/pupils');
-
 require('dotenv').config(); // to access SECRET_KEY in .env file
 
 app.set('SECRET_KEY', process.env.SECRET_KEY); // jwt secret key used for signing/verification
 
 app.use(logger('dev'));
 app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
 
 app.get('/', function (req, res) {
-    res.json({ "test": "this should appear if it works" });
+    res.json({ "success": true, "test": "this should appear if it works" });
 });
 
-app.use('/api/teachers', teachers);
+// our api endpoints for teachers and students
+const teachers = require('./server/routes/teachers');
+const teacherManagement = require('./server/routes/teacherManagement');
+const pupils = require('./server/routes/pupils');
+
+
+app.use('/api/v1/teachers', teachers);
 
 // this route contains confidential information, so we
 // validate the teacher trying to access it
-app.use('/api/pupils', validateTeacher, pupils);
+app.use('/api/v1/pupils', validateTeacher, pupils);
+
+// this route is used to manage teacher accounts, so we
+// must validate the teacher trying to access it
+app.use('/api/v1/teachers/manage', validateTeacher, teacherManagement);
 
 function validateTeacher(req, res, callback) {
     jwt.verify(req.headers['x-access-token'], req.app.get('SECRET_KEY'), function (err, decoded) {
         if (err) {
-            console.log(req.headers['x-access-token']);
-            res.json({ status: "error", message: err.message, data: null });
+            res.json({ success: false, message: err.message, data: null });
         } else {
             // add id to request
             req.body.teacherId = decoded.id;
@@ -57,6 +63,7 @@ app.use(function (err, req, res, callback) {
         res.status(404).json({ message: "Not found" });
     } else {
         res.status(500).json({ message: "something's gone wrong" });
+        
     }
 });
 
