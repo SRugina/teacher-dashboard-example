@@ -85,11 +85,11 @@ module.exports = {
 	*/
     create: function (req, res, callback) {
         //append to data file
-        appendObj("pupils", { surname: req.body.surname, forename: req.body.forename, dob: req.body.dob, homeAddress: req.body.homeAddress, homePhone: req.body.homePhone, gender: req.body.gender, tutorGroup: req.body.tutorGroup, schoolEmail: req.body.schoolEmail }, (err) => {
+        appendObj("pupils", { surname: req.body.surname, forename: req.body.forename, dob: req.body.dob, homeAddress: req.body.homeAddress, homePhone: req.body.homePhone, gender: req.body.gender, tutorGroup: req.body.tutorGroup, schoolEmail: req.body.schoolEmail, grades: req.body.gradesArray }, (err, pupilId) => {
             if (err) {
                 callback(err);
             } else {
-                res.json({ success: true, message: "Pupil created successfully", data: null });
+                res.json({ success: true, message: "Pupil created successfully", data: {pupilId: pupilId} });
             }
         });
     }

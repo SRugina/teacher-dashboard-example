@@ -16,6 +16,7 @@ module.exports = {
             //get the data from the file, note: fs reads relative to root directory
             var dataFile = fs.readFileSync('data.json');
             var data = JSON.parse(dataFile);
+            let id = '';
 
             if (type.toLowerCase() == "teachers") {
                 obj.id = rand(); //generate new random id for teacher
@@ -24,6 +25,7 @@ module.exports = {
                 obj.id = rand(); //generate new random id for teacher
                 data["pupils"].push(obj);
             }
+            id = obj.id;
 
             //format data to be readable
             var dataJSON = JSON.stringify(data, null, 4);
@@ -33,10 +35,10 @@ module.exports = {
             // to see the updated data.json file in editor
             // you need to run 'refresh' from the console.
 
-            callback(false);
+            callback(false, id);
 
         } catch (err) {
-            callback(err);
+            callback(err, null);
         }
     }
 };
