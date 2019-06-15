@@ -4,11 +4,12 @@
   "description": "practice Computer Science GCSE programming task: a teacher dashboard",
   "main": "server.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "cd client && npm run build && cd .. && node server.js"
   },
   "dependencies": {
     "bcrypt": "^3.0.6",
     "body-parser": "^1.19.0",
+    "connect-history-api-fallback": "^1.6.0",
     "dotenv": "^8.0.0",
     "express": "^4.16.4",
     "jsonwebtoken": "^8.5.1",

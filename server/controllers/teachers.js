@@ -58,6 +58,7 @@ module.exports = {
    */
     authenticate: function(req, res, callback) {
         try {
+            console.log(req.body);
             find("teachers", "email", req.body.email, (err, profInfo) => {
                 if (err) {
                     callback(err);
@@ -75,6 +76,21 @@ module.exports = {
                         res.json({ success: false, message: "Invalid email/password", data: null });
 
                     }
+                }
+            });
+        } catch (err) {
+            // catch errors and pass them on
+            callback(err);
+        }
+    },
+
+    verify: function(req, res, callback) {
+        try {
+            jwt.verify(req.body.token, req.app.get('SECRET_KEY'), function(err, decoded) {
+                if (err) {
+                    res.json({ success: false, message: "invalid token", data: null });
+                } else {
+                    res.json({ success: true, message: "token is valid", data: null });
                 }
             });
         } catch (err) {

@@ -1,29 +1,52 @@
 import Vue from 'vue'
-import Router from 'vue-router'
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
+import "babel-polyfill";
+
+import auth from './auth'
 import App from './App.vue'
-import Pupils from './components/Pupils.vue'
-Vue.use(Router)
+import About from './components/About.vue'
+import Dashboard from './components/Dashboard.vue'
+import Login from './components/Login.vue'
+import notFound from './components/notFound.vue'
 
-// https://www.adcisolutions.com/knowledge/how-build-single-page-application-spa-vuejs
+function requireAuth (to, from, callback) {
+  if (!auth.loggedIn()) {
+    callback({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    callback()
+  }
+}
 
-const router = new Router({
- routes: [
-   {
-     path: '/',
-     name:'dash',
-     component: App,
-   },
-   {
-     path: '/pupil/:id',
-     name:'pupils',
-     component: Pupils,
-     props: true,
-   },
- ]
+const router = new VueRouter({
+  mode: 'history',
+  base: __dirname,
+  routes: [
+    { path: '/' },
+    { path: '/about', component: About },
+    { path: '/dash', component: Dashboard, beforeEnter: requireAuth },
+    { path: '/login', component: Login },
+    { path: '/logout',
+      beforeEnter (to, from, callback) {
+        auth.logout()
+        callback('/')
+      }
+    },
+    { path: '*', component: notFound }
+  ]
 })
 
+/* eslint-disable no-new */
 new Vue({
- el: '#app',
- render: h => h(App),
- router
+  el: '#app',
+  auth,
+  router,
+  // replace the content of <div id="app"></div> with App
+  render: h => h(App)
 })
+
+export {store};
