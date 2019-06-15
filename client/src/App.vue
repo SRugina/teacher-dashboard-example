@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" v-if="!isLoading">
     <h1>Tree Road School - Teacher Dashboard</h1>
     <ul>
       <li>
@@ -31,11 +31,15 @@ import auth from './auth'
 export default {
   data () {
     return {
-      loggedIn: auth.loggedIn().then((res) => res),
+      isLoading: true,
+      loggedIn: '',
     }
   },
-  created () {
-    auth.loggedIn().then((res) => console.log(res));
+  async created () {
+    if (this.isLoading) {
+      this.loggedIn = await auth.loggedIn();
+      this.isLoading = false;
+    }
     auth.onChange = (loggedIn) => {
       this.loggedIn = loggedIn;
     }

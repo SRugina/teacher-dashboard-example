@@ -11,14 +11,14 @@ import Dashboard from './components/Dashboard.vue'
 import Login from './components/Login.vue'
 import notFound from './components/notFound.vue'
 
-function requireAuth (to, from, callback) {
-  if (!auth.loggedIn()) {
+async function requireAuth (to, from, callback) {
+  if (await auth.loggedIn()) {
+    callback()
+  } else {
     callback({
       path: '/login',
       query: { redirect: to.fullPath }
     })
-  } else {
-    callback()
   }
 }
 
