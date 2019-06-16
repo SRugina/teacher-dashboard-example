@@ -25,19 +25,23 @@ module.exports = {
                 if (err) {
                     callback(err);
                 } else {
-                    if (!profInfo.length == 0) {
+                    if (!(profInfo[0] == false)) {
                         res.json({ success: false, message: "teacher with that email already exists", data: null });
                     } else {
                         //hash their password
                         let password = bcrypt.hashSync(req.body.password, saltRounds);
 
                         //append to data file
-                        appendObj("teachers", { name: req.body.name, email: req.body.email, password: password, formGroup: req.body.formGroup }, (err, profId) => {
+                        appendObj("teachers", { name: req.body.name, email: req.body.email, password: password, formGroup: req.body.formGroup }, (err, additions, profId) => {
                             if (err) {
                                 callback(err);
                             } else {
-                                //notify of success
-                                res.json({ success: true, message: "Teacher added successfully", data: null });
+                                if (!(additions > 0)) {
+                                    res.json({ success: true, message: "Teacher could not be created", data: null });
+                                } else {
+                                    //notify of success
+                                    res.json({ success: true, message: "Teacher added successfully", data: null });
+                                }
                             }
                         });
                     }
@@ -63,18 +67,22 @@ module.exports = {
                 if (err) {
                     callback(err);
                 } else {
-                    let i = 0;
-                    while (i <= profInfo.length) {
-                        if (isset(() => profInfo[i]) && bcrypt.compareSync(req.body.password, profInfo[i]["password"])) {
-                            const token = jwt.sign({ id: profInfo[i].id }, req.app.get('SECRET_KEY'), { expiresIn: '1h' });
-                            res.json({ success: true, message: "teacher found", data: { teacher: profInfo[i], token: token } });
-                            break; // exit while loop as teacher found
-                        }
-                        i++;
-                    }
-                    if (i > profInfo.length) { // ie while loop above found nothing
+                    if (profInfo[0] == false) {
                         res.json({ success: false, message: "Invalid email/password", data: null });
+                    } else {
+                        let i = 0;
+                        while (i <= profInfo.length) {
+                            if (isset(() => profInfo[i]) && bcrypt.compareSync(req.body.password, profInfo[i]["password"])) {
+                                const token = jwt.sign({ id: profInfo[i].id }, req.app.get('SECRET_KEY'), { expiresIn: '1h' });
+                                res.json({ success: true, message: "teacher found", data: { teacher: profInfo[i], token: token } });
+                                break; // exit while loop as teacher found
+                            }
+                            i++;
+                        }
+                        if (i > profInfo.length) { // ie while loop above found nothing
+                            res.json({ success: false, message: "Invalid email/password", data: null });
 
+                        }
                     }
                 }
             });
@@ -100,18 +108,6 @@ module.exports = {
     },
 
     /**
-    * logout teacher by removing token from headers
-    *
-    * @param {object} req http request object, i.e. request from user
-    * @param {object} res http response object, i.e. response to send to user
-    * @param {Function} callback function to call afterwards
-    */
-    logout: function(req, res, callback) {
-        req.headers['x-access-token'] = '';
-        res.json({ success: true, message: "Teacher logged out successfully", data: { token: req.headers['x-access-token'] } });
-    },
-
-    /**
      * delete teacher with matching id
      *
      * @param {object} req http request object, i.e. request from user
@@ -119,12 +115,15 @@ module.exports = {
      * @param {Function} callback function to call afterwards
      */
     deleteById: function(req, res, callback) {
-        deleteObj("teachers", "id", req.params.profId, (err) => {
+        deleteObj("teachers", "id", req.params.profId, (err, deletions) => {
             if (err) {
                 callback(err);
             } else {
-                req.headers['x-access-token'] = '';
-                res.json({ success: true, message: "Teacher deleted successfully", data: null });
+                if (!(deletions > 0)) {
+                    res.json({ success: false, message: "Teacher could not be deleted", data: null });
+                } else {
+                    res.json({ success: true, message: "Teacher deleted successfully", data: null });
+                }
             }
         });
     },
@@ -138,11 +137,15 @@ module.exports = {
      */
     updateById: function(req, res, callback) {
 
-        updateObj("teachers", "id", req.params.profId, req.body.toReplace, req.body.newValue, (err) => {
+        updateObj("teachers", "id", req.params.profId, req.body.toReplace, req.body.newValue, (err, changes) => {
             if (err) {
                 callback(err);
             } else {
-                res.json({ success: true, message: "Teacher updated successfully", data: null });
+                if (!(changes > 0)) {
+                    res.json({ success: false, message: "Teacher could not be updated", data: null });
+                } else {
+                    res.json({ success: true, message: "Teacher updated successfully", data: null });
+                }
             }
         });
     },
@@ -159,7 +162,11 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ success: true, message: "teachers list found", data: { teachers: teachers } });
+                if (teachers[0] == false) {
+                    res.json({ success: false, message: "no teachers list found", data: { teachers: teachers } });
+                } else {
+                    res.json({ success: true, message: "teachers list found", data: { teachers: teachers } });
+                }
             }
         });
     },
@@ -177,7 +184,11 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ success: true, message: "Teacher Found", data: { teachers: profInfo } });
+                if (profInfo[0] == false) { //i.e. no pupils found
+                    res.json({ success: false, message: "No Teacher Found", data: null });
+                } else {
+                    res.json({ success: true, message: "teacher Found", data: { teachers: profInfo } });
+                }
             }
         });
     }

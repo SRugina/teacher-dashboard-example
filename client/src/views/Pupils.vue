@@ -180,7 +180,7 @@ export default {
         this.error = false;
       } else {
         this.error = true;
-        this.$bvToast.toast('Invalid pupil ID', {
+        this.$bvToast.toast(`${data["message"]}`, {
           title: 'Error',
           toaster: 'b-toaster-top-center',
           autoHideDelay: 5000,
@@ -227,8 +227,8 @@ export default {
             this.editSchoolDetails = false;
           }
         } else {
-          this.$bvToast.toast('Unable to submit new details. Please contact support', {
-            title: 'Something has gone wrong',
+          this.$bvToast.toast(`${data["message"]}`, {
+            title: 'Error',
             toaster: 'b-toaster-top-center',
             autoHideDelay: 5000,
             variant: 'danger',

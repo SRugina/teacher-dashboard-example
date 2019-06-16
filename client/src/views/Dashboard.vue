@@ -57,7 +57,7 @@ export default {
         this.error = false;
       } else {
         this.error = true;
-        this.$bvToast.toast('Invalid pupil ID', {
+        this.$bvToast.toast(`${data["message"]}`, {
           title: 'Error',
           toaster: 'b-toaster-top-center',
           autoHideDelay: 5000,
