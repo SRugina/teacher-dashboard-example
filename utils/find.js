@@ -22,14 +22,22 @@ module.exports = {
                         results.push(prof); // add teacher to list
                     }
                 }
-                callback(false, results); // tell callback no error occurred and give results
+                if (results.length == 0) {
+                    callback(false, [ false ]); // tell callback no error occurred and no results
+                } else {
+                    callback(false, results); // tell callback no error occurred and give results
+                }
             } else if (type.toLowerCase() == "pupils") {
                 for (let kid of data["pupils"]) {
                     if (kid[prop] == val) {
                         results.push(kid);
                     }
                 }
-                callback(false, results);
+                if (results.length == 0) {
+                    callback(false, [ false ]); // tell callback no error occurred and no results
+                } else {
+                    callback(false, results); // tell callback no error occurred and give results
+                }
             }
         } catch (err) {
             callback(err, null);

@@ -26,7 +26,6 @@ export default {
 
   getToken() {
     let token = cookies.get('tr-token');
-    console.log("token is", token);
     if (isset(() => token)) {
       return token;
     } else {
@@ -42,7 +41,6 @@ export default {
 
   async loggedIn() {
     if (!this.getToken()) {
-      //console.log("logged in false");
       this.onChange(false);
       return false;
     } else {
@@ -50,7 +48,6 @@ export default {
         token: this.getToken()
       }));
       let data = await response.data;
-      //console.log(data['success']);
       this.onChange(data['success']);
       return data['success'];
     }

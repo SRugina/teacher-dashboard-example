@@ -18,7 +18,12 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                res.json({ success: true, message: "Pupil Found", data: { pupils: pupilInfo } });
+                console.log(pupilInfo);
+                if (pupilInfo[0] == false) { //i.e. no pupils found
+                    res.json({ success: false, message: "No Pupil Found", data: null });
+                } else {
+                    res.json({ success: true, message: "Pupil Found", data: { pupils: pupilInfo } });
+                }
             }
         });
     },

@@ -1,15 +1,21 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import BootstrapVue from 'bootstrap-vue'
 
-Vue.use(VueRouter)
+Vue.use(VueRouter);
+Vue.use(BootstrapVue);
+
+import './assets/scss/custom.scss';
+
 import "babel-polyfill";
 
 import auth from './auth'
 import App from './App.vue'
-import About from './components/About.vue'
-import Dashboard from './components/Dashboard.vue'
-import Login from './components/Login.vue'
-import notFound from './components/notFound.vue'
+import About from './views/About.vue'
+import Dashboard from './views/Dashboard.vue'
+import Pupils from './views/Pupils.vue'
+import Login from './views/Login.vue'
+import notFound from './views/notFound.vue'
 
 async function requireAuth (to, from, callback) {
   if (await auth.loggedIn()) {
@@ -29,6 +35,7 @@ const router = new VueRouter({
     { path: '/' },
     { path: '/about', component: About },
     { path: '/dash', component: Dashboard, beforeEnter: requireAuth },
+    { path: '/pupils/:id', component: Pupils, beforeEnter: requireAuth },
     { path: '/login', component: Login },
     { path: '/logout',
       beforeEnter (to, from, callback) {
@@ -43,7 +50,6 @@ const router = new VueRouter({
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
-  auth,
   router,
   // replace the content of <div id="app"></div> with App
   render: h => h(App)
