@@ -52,7 +52,6 @@ export default {
         }
       });
       let data = await response.data;
-      console.log(data);
       if (data["success"]) {
         this.pupils = data.data.pupils;
         this.error = false;

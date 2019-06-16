@@ -5,35 +5,120 @@
   </div>
   <div v-if="!error">
     <h2>Pupil {{ pupilid }} - {{ pupilforename }} {{ pupilsurname }}, {{ pupiltutorGroup }}</h2>
-    <div>
-      <b-card title="Personal Details" style="max-width: 20rem;" class="mb-2">
-        <b-form @submit.prevent="onSubmit" @reset.prevent="onReset">
-          <b-card-text>
-            <b-form-group id="input-group-dob" label="Date of Birth:" label-for="input-dob">
-              <b-form-input
-                id="input-dob"
-                v-model="pupildob"
-                required
-                type="date"
-                :disabled="!editPersonalDetails"
-              ></b-form-input>
-            </b-form-group>
-          </b-card-text>
+    <div style="display: flex; justify-content: space-evenly; ">
+      <div>
+        <b-card title="Personal Details" style="max-width: 25rem;" class="mb-2">
+          <b-form @submit.prevent="onSubmit('personal')" @reset.prevent="onReset">
+            <b-card-text>
+              <b-form-group id="input-group-forename" label="Forename:" label-for="input-forename">
+                <b-form-input
+                  id="input-forename"
+                  v-model="pupilforename"
+                  required
+                  type="text"
+                  :disabled="!editPersonalDetails"
+                ></b-form-input>
+              </b-form-group>
 
-          <b-button variant="primary" v-on:click="editPersonalDetails = true" v-if="!editPersonalDetails">Edit</b-button>
-          <b-button type="submit" variant="success" v-if="editPersonalDetails">Submit</b-button>
-          <b-button type="reset" variant="danger" v-on:click="editPersonalDetails = false" v-if="editPersonalDetails">Cancel</b-button>
-        </b-form>
-      </b-card>
-    </div>
-    <div>
-      <b-card title="Home Address" style="max-width: 20rem;" class="mb-2">
-        <b-card-text>
-          {{ pupilhomeAddress }}
-        </b-card-text>
+              <b-form-group id="input-group-surname" label="Surname:" label-for="input-surname">
+                <b-form-input
+                  id="input-surname"
+                  v-model="pupilsurname"
+                  required
+                  type="text"
+                  :disabled="!editPersonalDetails"
+                ></b-form-input>
+              </b-form-group>
 
-        <b-button variant="primary">Edit</b-button>
-      </b-card>
+              <b-form-group id="input-group-dob" label="Date of Birth:" label-for="input-dob">
+                <b-form-input
+                  id="input-dob"
+                  v-model="pupildob"
+                  required
+                  type="date"
+                  :disabled="!editPersonalDetails"
+                ></b-form-input>
+              </b-form-group>
+            </b-card-text>
+
+            <b-form-group id="input-group-gender" label="Gender:" label-for="input-gender">
+                <b-form-input
+                  id="input-gender"
+                  v-model="pupilgender"
+                  required
+                  type="text"
+                  :disabled="!editPersonalDetails"
+                ></b-form-input>
+              </b-form-group>
+
+            <b-button variant="primary" v-on:click="editPersonalDetails = true" v-if="!editPersonalDetails">Edit</b-button>
+            <b-button type="submit" variant="success" v-if="editPersonalDetails">Submit</b-button>
+            <b-button type="reset" variant="danger" v-on:click="editPersonalDetails = false" v-if="editPersonalDetails">Cancel</b-button>
+          </b-form>
+        </b-card>
+      </div>
+      <div>
+        <b-card title="Home Details" style="max-width: 25rem;" class="mb-2">
+          <b-form @submit.prevent="onSubmit('home')" @reset.prevent="onReset">
+            <b-card-text>
+              <b-form-group id="input-group-homeAddress" label="Address:" label-for="input-homeAddress">
+                <b-form-input
+                  id="input-homeAddress"
+                  v-model="pupilhomeAddress"
+                  required
+                  type="text"
+                  :disabled="!editHomeDetails"
+                ></b-form-input>
+              </b-form-group>
+
+              <b-form-group id="input-group-homePhone" label="Phone Number:" label-for="input-homePhone">
+                <b-form-input
+                  id="input-homePhone"
+                  v-model="pupilhomePhone"
+                  required
+                  type="tel"
+                  :disabled="!editHomeDetails"
+                ></b-form-input>
+              </b-form-group>
+            </b-card-text>
+
+            <b-button variant="secondary" v-on:click="editHomeDetails = true" v-if="!editHomeDetails">Edit</b-button>
+            <b-button type="submit" variant="success" v-if="editHomeDetails">Submit</b-button>
+            <b-button type="reset" variant="danger" v-on:click="editHomeDetails = false" v-if="editHomeDetails">Cancel</b-button>
+          </b-form>
+        </b-card>
+      </div>
+      <div>
+        <b-card title="School Details" style="max-width: 25rem;" class="mb-2">
+          <b-form @submit.prevent="onSubmit('school')" @reset.prevent="onReset">
+            <b-card-text>
+              <b-form-group id="input-group-tutorGroup" label="tutor Group:" label-for="input-tutorGroup">
+                <b-form-input
+                  id="input-tutorGroup"
+                  v-model="pupiltutorGroup"
+                  required
+                  type="text"
+                  :disabled="!editSchoolDetails"
+                ></b-form-input>
+              </b-form-group>
+
+              <b-form-group id="input-group-schoolEmail" label="Email:" label-for="input-schoolEmail">
+                <b-form-input
+                  id="input-schoolEmail"
+                  v-model="pupilschoolEmail"
+                  required
+                  type="email"
+                  :disabled="!editSchoolDetails"
+                ></b-form-input>
+              </b-form-group>
+            </b-card-text>
+
+            <b-button variant="warning" v-on:click="editSchoolDetails = true" v-if="!editSchoolDetails">Edit</b-button>
+            <b-button type="submit" variant="success" v-if="editSchoolDetails">Submit</b-button>
+            <b-button type="reset" variant="danger" v-on:click="editSchoolDetails = false" v-if="editSchoolDetails">Cancel</b-button>
+          </b-form>
+        </b-card>
+      </div>
     </div>
   </div>
   </div>
@@ -55,7 +140,7 @@ export default {
       editPersonalDetails: false,
       pupilhomeAddress: '',
       pupilhomePhone: '',
-      editHome: false,
+      editHomeDetails: false,
       pupiltutorGroup: '',
       pupilschoolEmail: '',
       editSchoolDetails: false,
@@ -77,7 +162,6 @@ export default {
         }
       });
       let data = await response.data;
-      console.log(data);
       if (data["success"]) {
         let pupil = data.data.pupils[0];
         // while we could access pupil.id etc. in the template, adding new features means
@@ -105,8 +189,20 @@ export default {
         })
       }
     },
-    async onSubmit () {
-      const types = [ "forename", "surname", "dob", "gender", "homeAddress", "homePhone", "tutorGroup", "schoolEmail" ];
+    async onSubmit (category) {
+      const personal = ["forename", "surname", "dob", "gender"];
+      const home = ["homeAddress", "homePhone"];
+      const school = ["tutorGroup", "schoolEmail"];
+      let types = [];
+      if (category.toLowerCase() == "personal") {
+        types = personal;
+      } else if (category.toLowerCase() == "home") {
+        types = home;
+      } else if (category.toLowerCase() == "school") {
+        types = school;
+      } else {
+        types = personal.concat(home, school);
+      }
       for (let type of types) {
         let response = await axios.put(`/api/v1/pupils/${this.pupilid}`, querystring.stringify({
           toReplace: type,
@@ -118,9 +214,18 @@ export default {
           }
         });
         let data = await response.data;
-        console.log(data);
         if (data["success"]) {
-          this.editPersonalDetails = false;
+          if (category.toLowerCase() == "personal") {
+            this.editPersonalDetails = false;
+          } else if (category.toLowerCase() == "home") {
+            this.editHomeDetails = false;
+          } else if (category.toLowerCase() == "school") {
+            this.editSchoolDetails = false;
+          } else {
+            this.editPersonalDetails = false;
+            this.editHomeDetails = false;
+            this.editSchoolDetails = false;
+          }
         } else {
           this.$bvToast.toast('Unable to submit new details. Please contact support', {
             title: 'Something has gone wrong',
