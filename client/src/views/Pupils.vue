@@ -163,24 +163,35 @@ export default {
       });
       let data = await response.data;
       if (data["success"]) {
-        let pupil = data.data.pupils[0];
-        // while we could access pupil.id etc. in the template, adding new features means
-        // one would need a dummy pupil object open to know what variables exist.
-        // so, it is better for future development to set all the variables here.
-        this.pupilid = pupil.id;
-        this.pupilforename = pupil.forename;
-        this.pupilsurname = pupil.surname;
-        this.pupildob = pupil.dob;
-        this.pupilhomeAddress = pupil.homeAddress;
-        this.pupilhomePhone = pupil.homePhone;
-        this.pupilgender = pupil.gender;
-        this.pupiltutorGroup = pupil.tutorGroup;
-        this.pupilschoolEmail = pupil.schoolEmail;
-        this.pupilGrades = pupil.grades;
-        this.error = false;
+        if (data.data.pupils.length == 0) {
+          this.error = true;
+          this.$bvToast.toast('Invalid pupil ID', {
+            title: 'Error',
+            toaster: 'b-toaster-top-center',
+            autoHideDelay: 5000,
+            variant: 'danger',
+            appendToast: true
+          })
+        } else {
+          let pupil = data.data.pupils[0];
+          // while we could access pupil.id etc. in the template, adding new features means
+          // one would need a dummy pupil object open to know what variables exist.
+          // so, it is better for future development to set all the variables here.
+          this.pupilid = pupil.id;
+          this.pupilforename = pupil.forename;
+          this.pupilsurname = pupil.surname;
+          this.pupildob = pupil.dob;
+          this.pupilhomeAddress = pupil.homeAddress;
+          this.pupilhomePhone = pupil.homePhone;
+          this.pupilgender = pupil.gender;
+          this.pupiltutorGroup = pupil.tutorGroup;
+          this.pupilschoolEmail = pupil.schoolEmail;
+          this.pupilGrades = pupil.grades;
+          this.error = false;
+        }
       } else {
         this.error = true;
-        this.$bvToast.toast('Invalid pupil ID', {
+        this.$bvToast.toast(`${data.message}`, {
           title: 'Error',
           toaster: 'b-toaster-top-center',
           autoHideDelay: 5000,
@@ -207,7 +218,7 @@ export default {
         let response = await axios.put(`/api/v1/pupils/${this.pupilid}`, querystring.stringify({
           toReplace: type,
           newValue: `${this["pupil".concat(type)]}`
-        }), 
+        }),
         {
           headers: {
             'x-access-token': auth.getToken()
