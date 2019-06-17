@@ -40,11 +40,7 @@ module.exports = {
             if (err) {
                 callback(err);
             } else {
-                if (pupils[0] == false) { //i.e. no pupils found
-                    res.json({ success: false, message: "No Pupils List Found", data: { pupils: pupils } });
-                } else {
-                    res.json({ success: true, message: "pupils list found", data: null });
-                }
+                res.json({ success: true, message: "pupils list found", data: { pupils: pupils } });
             }
         });
     },
@@ -58,15 +54,11 @@ module.exports = {
 	*/
     updateById: function (req, res, callback) {
 
-        updateObj("pupils", "id", req.params.pupilId, req.body.toReplace, req.body.newValue, (err, changes) => {
+        updateObj("pupils", "id", req.params.pupilId, req.body.toReplace, req.body.newValue, (err) => {
             if (err) {
                 callback(err);
             } else {
-                if (!(changes > 0)) {
-                    res.json({ success: false, message: "Pupil could not be updated", data: null });
-                } else {
-                    res.json({ success: true, message: "Pupil updated successfully", data: null });
-                }
+                res.json({ success: true, message: "Pupil updated successfully", data: null });
             }
         });
     },
@@ -80,15 +72,11 @@ module.exports = {
 	*/
     deleteById: function (req, res, callback) {
 
-        deleteObj("pupils", "id", req.params.pupilId, (err, deletions) => {
+        deleteObj("pupils", "id", req.params.pupilId, (err) => {
             if (err) {
                 callback(err);
             } else {
-                if (!(deletions > 0)) {
-                    res.json({ success: false, message: "Pupil could not be deleted", data: null });
-                } else {
-                    res.json({ success: true, message: "Pupil deleted successfully", data: null });
-                }
+                res.json({ success: true, message: "Pupil deleted successfully", data: null });
             }
         });
     },
@@ -102,15 +90,11 @@ module.exports = {
 	*/
     create: function (req, res, callback) {
         //append to data file
-        appendObj("pupils", { surname: req.body.surname, forename: req.body.forename, dob: req.body.dob, homeAddress: req.body.homeAddress, homePhone: req.body.homePhone, gender: req.body.gender, tutorGroup: req.body.tutorGroup, schoolEmail: req.body.schoolEmail, grades: req.body.gradesArray }, (err, additions, pupilId) => {
+        appendObj("pupils", { surname: req.body.surname, forename: req.body.forename, dob: req.body.dob, homeAddress: req.body.homeAddress, homePhone: req.body.homePhone, gender: req.body.gender, tutorGroup: req.body.tutorGroup, schoolEmail: req.body.schoolEmail, grades: req.body.gradesArray }, (err, pupilId) => {
             if (err) {
                 callback(err);
             } else {
-                if (!(additions > 0)) {
-                    res.json({ success: false, message: "Pupil could not be created", data: null });
-                } else {
-                    res.json({ success: true, message: "Pupil created successfully", data: null });
-                }
+                res.json({ success: true, message: "Pupil created successfully", data: {pupilId: pupilId} });
             }
         });
     }

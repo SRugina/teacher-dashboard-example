@@ -63,11 +63,6 @@ module.exports = {
             } else if (type.toLowerCase() == "pupils") {
                 list = data["pupils"];
             }
-            if (list.length == 0) {
-                callback(false, [ false ]); // tell callback no error occurred and no results
-            } else {
-                callback(false, list); // tell callback no error occurred and give results
-            }
             callback(false, list);
         } catch (err) {
             callback(err, null);

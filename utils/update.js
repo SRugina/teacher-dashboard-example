@@ -16,20 +16,17 @@ module.exports = {
             //get the data from the file
             var dataFile = fs.readFileSync('data.json');
             var data = JSON.parse(dataFile);
-            let changes = 0;
 
             if (type.toLowerCase() == "teachers") {
 		    for (let teacher of data["teachers"]) {
                     if (teacher[withProp] == checkVal) {
                         teacher[prop] = newVal;
-                        changes += 1;
                     }
                 }
             } else if (type.toLowerCase() == "pupils") {
                 for (let pupil of data["pupils"]) {
                     if (pupil[withProp] == checkVal) {
                         pupil[prop] = newVal;
-                        changes += 1;
                     }
                 }
             }
@@ -42,10 +39,10 @@ module.exports = {
             // to see the updated data.json file in editor
             // you need to run 'refresh' from the console.
 
-            callback(false, changes);
+            callback(false);
 
         } catch (err) {
-            callback(err, 0);
+            callback(err);
         }
     }
 };

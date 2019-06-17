@@ -15,20 +15,17 @@ module.exports = {
             //get the data from the file. note: fs reads relative to root directory
             var dataFile = fs.readFileSync('data.json');
             var data = JSON.parse(dataFile);
-            let deletions = 0;
 
             if (type.toLowerCase() == "teachers") {
                 for (let i = 0; i < data["teachers"].length; i++) { // for each teacher
                     if (data["teachers"][i][withProp] == checkVal) { // with property that equals our check value
                         data["teachers"].splice(i, 1); // remove that teacher
-                        deletions += 1;
                     }
                 }
             } else if (type.toLowerCase() == "pupils") {
                 for (let i = 0; i < data["pupils"].length; i++) { // for each pupil
                     if (data["pupils"][i][withProp] == checkVal) { // with property that matches our check value
                         data["pupils"].splice(i, 1); // remove that teacher
-                        deletions += 1;
                     }
                 }
             }
@@ -41,10 +38,10 @@ module.exports = {
             // to see the updated data.json file in editor
             // you need to run 'refresh' from the console.
 
-            callback(false, deletions); // tell callback function no error occured
+            callback(false); // tell callback function no error occured
 
         } catch (err) {
-            callback(err, 0); // tell callback function an error occured
+            callback(err); // tell callback function an error occured
         }
     }
 };

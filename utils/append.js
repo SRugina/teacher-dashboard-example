@@ -17,16 +17,13 @@ module.exports = {
             var dataFile = fs.readFileSync('data.json');
             var data = JSON.parse(dataFile);
             let id = '';
-            let additions = 0;
 
             if (type.toLowerCase() == "teachers") {
                 obj.id = rand(); //generate new random id for teacher
                 data["teachers"].push(obj);
-                additions += 1;
             } else if (type.toLowerCase() == "pupils") {
                 obj.id = rand(); //generate new random id for teacher
                 data["pupils"].push(obj);
-                additions += 1;
             }
             id = obj.id;
 
@@ -38,10 +35,10 @@ module.exports = {
             // to see the updated data.json file in editor
             // you need to run 'refresh' from the console.
 
-            callback(false, additions, id);
+            callback(false, id);
 
         } catch (err) {
-            callback(err, 0, null);
+            callback(err, null);
         }
     }
 };
