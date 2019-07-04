@@ -54,7 +54,7 @@ PORT=3000
 
 Then run this command from where you installed this project: `npm i && cd client && npm i && cd.. && npm start`
 
-Finally go to http://localhost:3000/ to see the project! The teacher's email address is ``
+Finally go to http://localhost:3000/ to see the project! The teacher's email address is `leeman@treeroad.org.uk` and the teacher's password is `teacher123`
 
 
 ## What would I improve?
@@ -63,5 +63,6 @@ If I had more time, I would have liked to:
 
 * have added a filtering system on the dashboard page e.g. show only pupils with x tutorGroup
 * have added a search by system on the search bar to allow searching by student name, dob, tutorGroup etc. as well as their unique ID number
-* made the front end look nicer rather than using the default bootstrap-vue stylings
-* added unit testing to the frontend, as currently there is only unit testing on the backend CRUD API
+* have created an admin section where teachers could be created and pupils could be deleted.
+* have made the front end look nicer rather than using the default bootstrap-vue stylings
+* have added unit testing to the frontend, as currently there is only unit testing on most of the backend CRUD API
