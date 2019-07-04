@@ -11,14 +11,14 @@ module.exports = {
    * @param {string} newVal the new value for prop
    * @param {Function} callback function to call afterwards
    */
-    updateObj: function(type, withProp, checkVal, prop, newVal, callback) {
+    updateObj: function (type, withProp, checkVal, prop, newVal, callback) {
         try {
             //get the data from the file
             var dataFile = fs.readFileSync('data.json');
             var data = JSON.parse(dataFile);
 
             if (type.toLowerCase() == "teachers") {
-		    for (let teacher of data["teachers"]) {
+                for (let teacher of data["teachers"]) {
                     if (teacher[withProp] == checkVal) {
                         teacher[prop] = newVal;
                     }
@@ -35,9 +35,6 @@ module.exports = {
             var dataJSON = JSON.stringify(data, null, 4);
             // write the new data to data.json
             fs.writeFileSync('data.json', dataJSON);
-            // due to the way glitch.com works, if you want
-            // to see the updated data.json file in editor
-            // you need to run 'refresh' from the console.
 
             callback(false);
 

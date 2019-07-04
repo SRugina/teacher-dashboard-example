@@ -51,7 +51,7 @@ SECRET_KEY="helloThere"
 PORT=3000
 ```
 
-Then run this command from where you installed this project: `npm i && cd client && npm i && cd.. && npm start`
+Then run this command from where you installed this project: `npm i && cd client && npm i && cd .. && npm start`
 
 Finally go to http://localhost:3000/ to see the project! The teacher's email address is `leeman@treeroad.org.uk` and the teacher's password is `teacher123`
 

@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 module.exports = {
     /**
@@ -10,7 +9,7 @@ module.exports = {
    * @param {string} checkVal the value we check the property against
    * @param {Function} callback function to call afterwards
    */
-    deleteObj: function(type, withProp, checkVal, callback) {
+    deleteObj: function (type, withProp, checkVal, callback) {
         try {
             //get the data from the file. note: fs reads relative to root directory
             var dataFile = fs.readFileSync('data.json');
@@ -34,9 +33,6 @@ module.exports = {
             var dataJSON = JSON.stringify(data, null, 4);
             // write the new data to data.json
             fs.writeFileSync('data.json', dataJSON);
-            // due to the way glitch.com works, if you want
-            // to see the updated data.json file in editor
-            // you need to run 'refresh' from the console.
 
             callback(false); // tell callback function no error occured
 

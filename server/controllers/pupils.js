@@ -58,7 +58,7 @@ module.exports = {
 
                     console.log(req.body);
 
-                    for (item of req.body.reportOptions) {
+                    for (let item of req.body.reportOptions) {
                         console.log(item);
                         table.rows.push([item, pupilInfo[0][item]]);
                     }
@@ -67,6 +67,7 @@ module.exports = {
 
                     doc.table(table, {
                         prepareHeader: () => doc.font('Helvetica-Bold'),
+                        // eslint-disable-next-line no-unused-vars
                         prepareRow: (row, i) => doc.font('Helvetica').fontSize(12)
                     });
 

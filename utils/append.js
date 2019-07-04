@@ -1,5 +1,4 @@
 const fs = require('fs');
-const path = require('path');
 
 const rand = require('./rand').rand;
 
@@ -11,7 +10,7 @@ module.exports = {
    * @param {JSON} obj the object we want to add
    * @param {Function} callback function to call afterwards
    */
-    appendObj: function(type, obj, callback) {
+    appendObj: function (type, obj, callback) {
         try {
             //get the data from the file, note: fs reads relative to root directory
             var dataFile = fs.readFileSync('data.json');
@@ -31,9 +30,6 @@ module.exports = {
             var dataJSON = JSON.stringify(data, null, 4);
             // write the new data to data.json
             fs.writeFileSync('data.json', dataJSON);
-            // due to the way glitch.com works, if you want
-            // to see the updated data.json file in editor
-            // you need to run 'refresh' from the console.
 
             callback(false, id);
 

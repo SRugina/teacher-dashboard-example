@@ -63,7 +63,7 @@ app.use(function(req, res, callback) {
 });
 
 //handle 404 and other errors
-app.use(function(err, req, res, callback) {
+app.use(function(err, req, res) {
     console.log(err);
 
     if (err.status === 404) {

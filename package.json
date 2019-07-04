@@ -21,6 +21,7 @@
   "license": "MIT",
   "devDependencies": {
     "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.2.3",
     "mocha": "^6.1.4",
     "should": "^13.2.3",
     "supertest": "^4.0.2"

@@ -19,7 +19,7 @@ module.exports = {
    * @param {Function} callback function to call afterwards
    * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
    */
-    create: function(req, res, callback) {
+    create: function (req, res, callback) {
         try {
 
             find("teachers", "email", req.body.email, (err, profInfo) => {
@@ -33,6 +33,7 @@ module.exports = {
                         let password = bcrypt.hashSync(req.body.password, saltRounds);
 
                         //append to data file
+                        // eslint-disable-next-line no-unused-vars
                         appendObj("teachers", { name: req.body.name, email: req.body.email, password: password, formGroup: req.body.formGroup }, (err, profId) => {
                             if (err) {
                                 callback(err); //pass error over to express error handling
@@ -58,7 +59,7 @@ module.exports = {
    * @param {Function} callback function to call afterwards
    * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing jwt token and the teacher's info (if success true, otherwise = null)
    */
-    authenticate: function(req, res, callback) {
+    authenticate: function (req, res, callback) {
         try {
             console.log(req.body);
             find("teachers", "email", req.body.email, (err, profInfo) => {
@@ -95,9 +96,10 @@ module.exports = {
    * @param {Function} callback function to call afterwards
    * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
    */
-    verify: function(req, res, callback) {
+    verify: function (req, res, callback) {
         try {
-            jwt.verify(req.body.token, req.app.get('SECRET_KEY'), function(err, decoded) {
+            // eslint-disable-next-line no-unused-vars
+            jwt.verify(req.body.token, req.app.get('SECRET_KEY'), function (err, decoded) {
                 if (err) {
                     res.json({ success: false, message: "invalid token", data: null });
                 } else {
@@ -110,15 +112,14 @@ module.exports = {
         }
     },
 
-     /**
+    /**
     * logout teacher by removing token from headers
     *
     * @param {Request} req http request object, i.e. request from user
     * @param {Response} res http response object, i.e. response to send to user
-    * @param {Function} callback function to call afterwards
     * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing an empty token string (should always be '')
     */
-    logout: function(req, res, callback) {
+    logout: function (req, res) {
         req.headers['x-access-token'] = '';
         res.json({ success: true, message: "Teacher logged out successfully", data: { token: req.headers['x-access-token'] } });
     },
@@ -131,7 +132,7 @@ module.exports = {
      * @param {Function} callback function to call afterwards
      * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
      */
-    deleteById: function(req, res, callback) {
+    deleteById: function (req, res, callback) {
         deleteObj("teachers", "id", req.params.profId, (err) => {
             if (err) {
                 callback(err); //pass error over to express error handling
@@ -149,7 +150,7 @@ module.exports = {
      * @param {Function} callback function to call afterwards
      * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
      */
-    updateById: function(req, res, callback) {
+    updateById: function (req, res, callback) {
 
         updateObj("teachers", "id", req.params.profId, req.body.toReplace, req.body.newValue, (err) => {
             if (err) {
@@ -168,7 +169,7 @@ module.exports = {
     * @param {Function} callback function to call afterwards
     * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing array of teachers (if success true, otherwise = null)
     */
-    getAll: function(req, res, callback) {
+    getAll: function (req, res, callback) {
         findAll("teachers", (err, teachers) => {
             if (err) {
                 callback(err); //pass error over to express error handling
@@ -186,7 +187,7 @@ module.exports = {
     * @param {Function} callback function to call afterwards
     * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing teacher's info (if success true, otherwise = null)
     */
-    getById: function(req, res, callback) {
+    getById: function (req, res, callback) {
         console.log(req.body);
         find("teachers", "id", req.params.profId, (err, profInfo) => {
             if (err) {
