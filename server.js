@@ -59,7 +59,7 @@ app.use('/api/v1/teachers/manage', verifyTeacher, teacherManagement);
 app.use(function(req, res, callback) {
     let err = new Error('Not Found');
     err.status = 404;
-    callback(err);
+    callback(err); //pass error over to express error handling
 });
 
 //handle 404 and other errors

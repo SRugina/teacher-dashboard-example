@@ -8,4 +8,6 @@ router.get('/:pupilId', pupilController.getById);
 router.put('/:pupilId', pupilController.updateById);
 router.delete('/:pupilId', pupilController.deleteById);
 
+router.post('/:pupilId/report', pupilController.createReport);
+
 module.exports = router;

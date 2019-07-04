@@ -4,7 +4,7 @@
     <h2 class="error">Invalid pupil ID</h2>
   </div>
   <div v-if="!error">
-    <h2>Pupil {{ pupilid }} - {{ pupilforename }} {{ pupilsurname }}, {{ pupiltutorGroup }}</h2>
+    <h2>Pupil {{ pupilid }} - {{ pupilforename }} {{ pupilsurname }}, {{ pupiltutorGroup }} -- <b-link :to="'/pupils/'+pupilid+'/report'">Generate a Report</b-link></h2>
     <div style="display: flex; justify-content: space-evenly; ">
       <div>
         <b-card title="Personal Details" style="max-width: 25rem;" class="mb-2">

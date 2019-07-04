@@ -42,7 +42,7 @@ module.exports = {
             callback(false);
 
         } catch (err) {
-            callback(err);
+            callback(err); //tell callback error has occured
         }
     }
 };

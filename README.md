@@ -1,5 +1,5 @@
 # teacher-dashboard-example
-practice Computer Science GCSE programming task: a teacher dashboard
+practice Computer Science GCSE programming task: a teacher dashboard, to be completed in 20 hours worth of coding time
 
 Note: frequent mention of glitch.com in comments is because the code is running there at teacher-dash.glitch.me, but this program can still be compiled from source
 
@@ -40,3 +40,12 @@ Analyse the requirements for this system and design, develop, test and evaluate 
 5. retrieve and display the details of any student when Mr Leeman enters the student's unique ID number.
 6. create at least three different reports that Mr Leeman might need, and describe how he would use each one
 7. produce these reports when selected from a menu.
+
+## What would I improve?
+
+If I had more time, I would have liked to:
+
+* have added a filtering system on the dashboard page e.g. show only pupils with x tutorGroup
+* have added a search by system on the search bar to allow searching by student name, dob, tutorGroup etc. as well as their unique ID number
+* made the front end look nicer rather than using the default bootstrap-vue stylings
+* added unit testing to the frontend, as currently there is only unit testing on the backend CRUD API

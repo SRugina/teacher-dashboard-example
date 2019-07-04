@@ -61,6 +61,12 @@ export default {
             appendToast: true
           })
         } else {
+          this.$bvToast.toast('Correct Email/Password', {
+            title: 'Error',
+            autoHideDelay: 5000,
+            variant: 'danger',
+            appendToast: true
+          })
           this.$router.replace(this.$route.query.redirect || '/dash')
         }
       })

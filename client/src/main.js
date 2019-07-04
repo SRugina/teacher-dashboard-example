@@ -14,6 +14,7 @@ import App from './App.vue'
 import About from './views/About.vue'
 import Dashboard from './views/Dashboard.vue'
 import Pupils from './views/Pupils.vue'
+import Reports from './views/Reports.vue'
 import Login from './views/Login.vue'
 import notFound from './views/notFound.vue'
 
@@ -36,6 +37,7 @@ const router = new VueRouter({
     { path: '/about', component: About },
     { path: '/dash', component: Dashboard, beforeEnter: requireAuth },
     { path: '/pupils/:id', component: Pupils, beforeEnter: requireAuth },
+    { path: '/pupils/:id/report', component: Reports, beforeEnter: requireAuth },
     { path: '/login', component: Login },
     { path: '/logout',
       beforeEnter (to, from, callback) {

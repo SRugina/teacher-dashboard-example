@@ -12,18 +12,19 @@ const deleteObj = require('../../utils/delete').deleteObj;
 
 module.exports = {
     /**
-   * create new teacher
+   * create new teacher (req.body must contain name, email, password, formGroup)
    *
-   * @param {object} req http request object, i.e. request from user
-   * @param {object} res http response object, i.e. response to send to user
+   * @param {Request} req http request object, i.e. request from user
+   * @param {Response} res http response object, i.e. response to send to user
    * @param {Function} callback function to call afterwards
+   * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
    */
     create: function(req, res, callback) {
         try {
 
             find("teachers", "email", req.body.email, (err, profInfo) => {
                 if (err) {
-                    callback(err);
+                    callback(err); //pass error over to express error handling
                 } else {
                     if (!profInfo.length == 0) {
                         res.json({ success: false, message: "teacher with that email already exists", data: null });
@@ -34,7 +35,7 @@ module.exports = {
                         //append to data file
                         appendObj("teachers", { name: req.body.name, email: req.body.email, password: password, formGroup: req.body.formGroup }, (err, profId) => {
                             if (err) {
-                                callback(err);
+                                callback(err); //pass error over to express error handling
                             } else {
                                 //notify of success
                                 res.json({ success: true, message: "Teacher added successfully", data: null });
@@ -45,23 +46,24 @@ module.exports = {
             });
         } catch (err) {
             // catch errors and pass them on to express
-            callback(err);
+            callback(err); //pass error over to express error handling
         }
     },
 
     /**
-   *  authenticate a teacher's details for sign-in
+   *  authenticate a teacher's details for sign-in (req.body must contain email, password)
    *
-   * @param {object} req http request object, i.e. request from user
-   * @param {object} res http response object, i.e. response to send to user
+   * @param {Request} req http request object, i.e. request from user
+   * @param {Response} res http response object, i.e. response to send to user
    * @param {Function} callback function to call afterwards
+   * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing jwt token and the teacher's info (if success true, otherwise = null)
    */
     authenticate: function(req, res, callback) {
         try {
             console.log(req.body);
             find("teachers", "email", req.body.email, (err, profInfo) => {
                 if (err) {
-                    callback(err);
+                    callback(err); //pass error over to express error handling
                 } else {
                     let i = 0;
                     while (i <= profInfo.length) {
@@ -80,10 +82,19 @@ module.exports = {
             });
         } catch (err) {
             // catch errors and pass them on
-            callback(err);
+            callback(err); //pass error over to express error handling
         }
     },
 
+
+    /**
+   *  verify a teacher's token to make sure the token is still valid (hasn't expired) (req.body must contain token)
+   *
+   * @param {Request} req http request object, i.e. request from user
+   * @param {Response} res http response object, i.e. response to send to user
+   * @param {Function} callback function to call afterwards
+   * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
+   */
     verify: function(req, res, callback) {
         try {
             jwt.verify(req.body.token, req.app.get('SECRET_KEY'), function(err, decoded) {
@@ -95,16 +106,17 @@ module.exports = {
             });
         } catch (err) {
             // catch errors and pass them on
-            callback(err);
+            callback(err); //pass error over to express error handling
         }
     },
 
-    /**
+     /**
     * logout teacher by removing token from headers
     *
-    * @param {object} req http request object, i.e. request from user
-    * @param {object} res http response object, i.e. response to send to user
+    * @param {Request} req http request object, i.e. request from user
+    * @param {Response} res http response object, i.e. response to send to user
     * @param {Function} callback function to call afterwards
+    * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing an empty token string (should always be '')
     */
     logout: function(req, res, callback) {
         req.headers['x-access-token'] = '';
@@ -112,35 +124,36 @@ module.exports = {
     },
 
     /**
-     * delete teacher with matching id
+     * delete teacher with matching id (req.params must contain profId)
      *
-     * @param {object} req http request object, i.e. request from user
-     * @param {object} res http response object, i.e. response to send to user
+     * @param {Request} req http request object, i.e. request from user
+     * @param {Response} res http response object, i.e. response to send to user
      * @param {Function} callback function to call afterwards
+     * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
      */
     deleteById: function(req, res, callback) {
         deleteObj("teachers", "id", req.params.profId, (err) => {
             if (err) {
-                callback(err);
+                callback(err); //pass error over to express error handling
             } else {
-                req.headers['x-access-token'] = '';
                 res.json({ success: true, message: "Teacher deleted successfully", data: null });
             }
         });
     },
 
     /**
-     * update teacher with matching id
+     * update teacher with matching id (req.body must contain toReplace, newValue, and req.params must contain profId)
      *
-     * @param {object} req http request object, i.e. request from user
-     * @param {object} res http response object, i.e. response to send to user
+     * @param {Request} req http request object, i.e. request from user
+     * @param {Response} res http response object, i.e. response to send to user
      * @param {Function} callback function to call afterwards
+     * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" (always = null)
      */
     updateById: function(req, res, callback) {
 
         updateObj("teachers", "id", req.params.profId, req.body.toReplace, req.body.newValue, (err) => {
             if (err) {
-                callback(err);
+                callback(err); //pass error over to express error handling
             } else {
                 res.json({ success: true, message: "Teacher updated successfully", data: null });
             }
@@ -150,14 +163,15 @@ module.exports = {
     /**
     * get all teachers
     *
-    * @param {object} req http request object, i.e. request from user
-    * @param {object} res http response object, i.e. response to send to user
+    * @param {Request} req http request object, i.e. request from user
+    * @param {Response} res http response object, i.e. response to send to user
     * @param {Function} callback function to call afterwards
+    * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing array of teachers (if success true, otherwise = null)
     */
     getAll: function(req, res, callback) {
         findAll("teachers", (err, teachers) => {
             if (err) {
-                callback(err);
+                callback(err); //pass error over to express error handling
             } else {
                 res.json({ success: true, message: "teachers list found", data: { teachers: teachers } });
             }
@@ -165,17 +179,18 @@ module.exports = {
     },
 
     /**
-    * get teacher with matching id
-    *
-    * @param {object} req http request object, i.e. request from user
-    * @param {object} res http response object, i.e. response to send to user
+    * get teacher with matching id (req.params must contain profId)
+    *{Request} req
+    * @param {Response} resq http request object, i.e. request from user
+    * @param {Response} res http response object, i.e. response to send to user
     * @param {Function} callback function to call afterwards
+    * @returns {JSON} json with "success" (true/false), "message" explaining what has occured, and "data" containing teacher's info (if success true, otherwise = null)
     */
     getById: function(req, res, callback) {
         console.log(req.body);
         find("teachers", "id", req.params.profId, (err, profInfo) => {
             if (err) {
-                callback(err);
+                callback(err); //pass error over to express error handling
             } else {
                 res.json({ success: true, message: "Teacher Found", data: { teachers: profInfo } });
             }
