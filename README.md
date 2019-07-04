@@ -41,6 +41,22 @@ Analyse the requirements for this system and design, develop, test and evaluate 
 6. create at least three different reports that Mr Leeman might need, and describe how he would use each one
 7. produce these reports when selected from a menu.
 
+## From Source
+
+To compile from source, you need Node.js installed, if you get it from their website it will also come with npm, which is also needed.
+
+After that, you need to create a file called `.env` where you installed this project, and put this in it to get it to work with the pre-made teacher in the data.json file:
+
+```
+SECRET_KEY="helloThere"
+PORT=3000
+```
+
+Then run this command from where you installed this project: `npm i && cd client && npm i && cd.. && npm start`
+
+Finally go to http://localhost:3000/ to see the project! The teacher's email address is ``
+
+
 ## What would I improve?
 
 If I had more time, I would have liked to:
